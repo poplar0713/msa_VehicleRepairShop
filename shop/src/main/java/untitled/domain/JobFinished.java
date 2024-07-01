@@ -1,9 +1,9 @@
 package untitled.domain;
 
-import java.time.LocalDate;
-import java.util.*;
-import lombok.*;
-import untitled.domain.*;
+import java.util.Date;
+
+import lombok.Data;
+import lombok.ToString;
 import untitled.infra.AbstractEvent;
 
 //<<< DDD / Domain Event
@@ -21,34 +21,7 @@ public class JobFinished extends AbstractEvent {
     private String usedPartName;
     private Date jobStartDate;
     private Long receiptId;
-    private String mechanicName;
-    private String mechanicId;
-    private String term;
-    private String jobStatus;
-    private Integer totalPrice;
-    private Long usedPartId;
-    private String usedPartName;
-    private Date jobStartDate;
-    private Long receiptId;
-    private String mechanicName;
-    private String mechanicId;
-    private String term;
-    private String jobStatus;
-    private Integer totalPrice;
-    private Long usedPartId;
-    private String usedPartName;
-    private Date jobStartDate;
-    private Long receiptId;
-    private String mechanicName;
-    private String mechanicId;
-    private String term;
-    private String jobStatus;
-    private Integer totalPrice;
-    private Long usedPartId;
-    private String usedPartName;
-    private Date jobStartDate;
-    private Long receiptId;
-
+    
     public JobFinished(Shop aggregate) {
         super(aggregate);
     }

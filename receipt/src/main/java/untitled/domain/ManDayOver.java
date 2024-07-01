@@ -1,8 +1,7 @@
 package untitled.domain;
 
-import java.util.*;
-import lombok.*;
-import untitled.domain.*;
+import lombok.Data;
+import lombok.ToString;
 import untitled.infra.AbstractEvent;
 
 @Data
@@ -13,4 +12,5 @@ public class ManDayOver extends AbstractEvent {
     private Long mechanicId;
     private String mechanicName;
     private Integer manDay;
+    private Long receiptId;
 }

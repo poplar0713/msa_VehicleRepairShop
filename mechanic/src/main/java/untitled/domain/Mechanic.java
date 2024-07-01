@@ -1,13 +1,14 @@
 package untitled.domain;
 
-import java.time.LocalDate;
-import java.util.Date;
-import java.util.List;
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.PostPersist;
+import javax.persistence.Table;
+
 import lombok.Data;
 import untitled.MechanicApplication;
-import untitled.domain.DecreaseManDay;
-import untitled.domain.ManDayOver;
 
 @Entity
 @Table(name = "Mechanic_table")
@@ -25,7 +26,7 @@ public class Mechanic {
 
     @PostPersist
     public void onPostPersist() {
-        DecreaseManDay decreaseManDay = new DecreaseManDay(this);
+        ManDayDecreased decreaseManDay = new ManDayDecreased(this);
         decreaseManDay.publishAfterCommit();
 
         ManDayOver manDayOver = new ManDayOver(this);
@@ -67,6 +68,23 @@ public class Mechanic {
 
          });
         */
+
+        repository().findById(Long.valueOf(repairRequested.getId())).ifPresent(mechanic->{
+            if(mechanic.getManDay() >= repairRequested.getManDay()){
+                mechanic.setManDay(mechanic.getManDay() - repairRequested.getManDay()); 
+                repository().save(mechanic);
+
+                ManDayDecreased manDayDecreased = new ManDayDecreased(mechanic);
+                manDayDecreased.publishAfterCommit();
+
+            }else {
+                ManDayOver manDayOver = new ManDayOver(mechanic);
+                manDayOver.setReceiptId(repairRequested.getId()); 
+                manDayOver.publishAfterCommit();
+            }
+            
+        });
+
 
     }
 

@@ -1,9 +1,7 @@
 package untitled.domain;
 
-import java.time.LocalDate;
-import java.util.*;
-import lombok.*;
-import untitled.domain.*;
+import lombok.Data;
+import lombok.ToString;
 import untitled.infra.AbstractEvent;
 
 //<<< DDD / Domain Event
@@ -15,6 +13,7 @@ public class ManDayOver extends AbstractEvent {
     private Long mechanicId;
     private String mechanicName;
     private Integer manDay;
+    private Long receiptId;
 
     public ManDayOver(Mechanic aggregate) {
         super(aggregate);

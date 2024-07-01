@@ -1,9 +1,9 @@
 package untitled.domain;
 
-import java.time.LocalDate;
-import java.util.*;
-import lombok.*;
-import untitled.domain.*;
+import java.util.Date;
+
+import lombok.Data;
+import lombok.ToString;
 import untitled.infra.AbstractEvent;
 
 //<<< DDD / Domain Event
@@ -20,7 +20,6 @@ public class RepairRequested extends AbstractEvent {
     private Integer fare;
     private Integer manDay;
     private Long mechanicId;
-    private String mechanicName;
     private String mechanicName;
 
     public RepairRequested(Receipt aggregate) {

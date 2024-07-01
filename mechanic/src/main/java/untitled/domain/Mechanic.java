@@ -27,7 +27,10 @@ public class Mechanic {
     public void onPostPersist() {
         DecreaseManDay decreaseManDay = new DecreaseManDay(this);
         decreaseManDay.publishAfterCommit();
+    }
 
+    @PostUpdate
+    public void onPostUpdate() {
         ManDayOver manDayOver = new ManDayOver(this);
         manDayOver.publishAfterCommit();
     }

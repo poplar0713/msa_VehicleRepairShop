@@ -15,6 +15,7 @@ public class ManDayOver extends AbstractEvent {
     private Long mechanicId;
     private String mechanicName;
     private Integer manDay;
+    private String receiptd;
 
     public ManDayOver(Mechanic aggregate) {
         super(aggregate);

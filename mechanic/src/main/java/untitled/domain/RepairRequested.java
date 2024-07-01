@@ -19,5 +19,4 @@ public class RepairRequested extends AbstractEvent {
     private Integer manDay;
     private Long mechanicId;
     private String mechanicName;
-    private String mechanicName;
 }

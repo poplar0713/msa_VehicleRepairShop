@@ -8,6 +8,7 @@ import untitled.infra.AbstractEvent;
 @Data
 public class PartRecived extends AbstractEvent {
 
+    private Long receiptId;
     private Long id;
     private String mechanicName;
     private String mechanicId;
@@ -17,32 +18,4 @@ public class PartRecived extends AbstractEvent {
     private Long usedPartId;
     private String usedPartName;
     private Date jobStartDate;
-    private Long receiptId;
-    private String mechanicName;
-    private String mechanicId;
-    private String term;
-    private String jobStatus;
-    private Integer totalPrice;
-    private Long usedPartId;
-    private String usedPartName;
-    private Date jobStartDate;
-    private Long receiptId;
-    private String mechanicName;
-    private String mechanicId;
-    private String term;
-    private String jobStatus;
-    private Integer totalPrice;
-    private Long usedPartId;
-    private String usedPartName;
-    private Date jobStartDate;
-    private Long receiptId;
-    private String mechanicName;
-    private String mechanicId;
-    private String term;
-    private String jobStatus;
-    private Integer totalPrice;
-    private Long usedPartId;
-    private String usedPartName;
-    private Date jobStartDate;
-    private Long receiptId;
 }

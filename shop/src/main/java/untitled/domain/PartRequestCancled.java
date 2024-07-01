@@ -21,24 +21,6 @@ public class PartRequestCancled extends AbstractEvent {
     private String usedPartName;
     private Date jobStartDate;
     private Long receiptId;
-    private String mechanicName;
-    private String mechanicId;
-    private String term;
-    private String jobStatus;
-    private Integer totalPrice;
-    private Long usedPartId;
-    private String usedPartName;
-    private Date jobStartDate;
-    private Long receiptId;
-    private String mechanicName;
-    private String mechanicId;
-    private String term;
-    private String jobStatus;
-    private Integer totalPrice;
-    private Long usedPartId;
-    private String usedPartName;
-    private Date jobStartDate;
-    private Long receiptId;
 
     public PartRequestCancled(Shop aggregate) {
         super(aggregate);

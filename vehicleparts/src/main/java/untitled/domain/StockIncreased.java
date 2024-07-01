@@ -16,14 +16,6 @@ public class StockIncreased extends AbstractEvent {
     private String partName;
     private Integer stock;
     private Integer partPrice;
-    private Long partId;
-    private String partName;
-    private Integer stock;
-    private Integer partPrice;
-    private Long partId;
-    private String partName;
-    private Integer stock;
-    private Integer partPrice;
 
     public StockIncreased(VehicleParts aggregate) {
         super(aggregate);

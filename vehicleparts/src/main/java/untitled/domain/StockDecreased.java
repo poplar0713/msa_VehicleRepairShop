@@ -11,15 +11,11 @@ import untitled.infra.AbstractEvent;
 @ToString
 public class StockDecreased extends AbstractEvent {
 
+    private String partName;
+    private Integer stock;
+    private Integer partPrice;
     private Long id;
     private Long partId;
-    private String partName;
-    private Integer stock;
-    private Integer partPrice;
-    private Long partId;
-    private String partName;
-    private Integer stock;
-    private Integer partPrice;
 
     public StockDecreased(VehicleParts aggregate) {
         super(aggregate);

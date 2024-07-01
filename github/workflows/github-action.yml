@@ -1,0 +1,87 @@
+name: github-action
+run-name: ${{ github.actor }} is out building GitHub Actions
+
+on:
+  push:
+    # Pattern matched against refs/tags
+    tags:        
+      - '**' 
+
+jobs:
+  docker:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v2
+      
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+      
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: Build Maven Projects
+        run: |
+          mvn clean package -f ./receipt/pom.xml
+          mvn clean package -f ./shop/pom.xml
+          mvn clean package -f ./vehicleparts/pom.xml
+          mvn clean package -f ./dashboard/pom.xml
+          mvn clean package -f ./mechanic/pom.xml
+
+      - name: Docker Build and push for Receipt
+        uses: docker/build-push-action@v4
+        with:
+          context: ./receipt
+          platforms: linux/amd64,linux/arm64
+          push: true
+          tags: |
+            ghcr.io/${{ github.repository }}/receipt:latest
+            ghcr.io/${{ github.repository }}/receipt:${{ github.ref_name }}
+            
+      - name: Docker Build and push for Shop
+        uses: docker/build-push-action@v4
+        with:
+          context: ./shop
+          platforms: linux/amd64,linux/arm64
+          push: true
+          tags: |
+            ghcr.io/${{ github.repository }}/shop:latest
+            ghcr.io/${{ github.repository }}/shop:${{ github.ref_name }}
+            
+      - name: Docker Build and push for Vehicleparts
+        uses: docker/build-push-action@v4
+        with:
+          context: ./vehicleparts
+          platforms: linux/amd64,linux/arm64
+          push: true
+          tags: |
+            ghcr.io/${{ github.repository }}/vehicleparts:latest
+            ghcr.io/${{ github.repository }}/vehicleparts:${{ github.ref_name }}
+            
+      - name: Docker Build and push for Dashboard
+        uses: docker/build-push-action@v4
+        with:
+          context: ./dashboard
+          platforms: linux/amd64,linux/arm64
+          push: true
+          tags: |
+            ghcr.io/${{ github.repository }}/dashboard:latest
+            ghcr.io/${{ github.repository }}/dashboard:${{ github.ref_name }}
+            
+      - name: Docker Build and push for Mechanic
+        uses: docker/build-push-action@v4
+        with:
+          context: ./mechanic
+          platforms: linux/amd64,linux/arm64
+          push: true
+          tags: |
+            ghcr.io/${{ github.repository }}/mechanic:latest
+            ghcr.io/${{ github.repository }}/mechanic:${{ github.ref_name }}
+            

@@ -1,9 +1,11 @@
 package untitled.domain;
 
-import java.time.LocalDate;
 import java.util.Date;
-import java.util.List;
-import javax.persistence.*;
+
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
 import lombok.Data;
 
 //<<< EDA / CQRS
@@ -15,9 +17,8 @@ public class StatusPage {
     @Id
     //@GeneratedValue(strategy=GenerationType.AUTO)
     private Long id;
-
+    private Long receiptId;
     private String customerName;
-    private Long requestId;
     private Long jobId;
     private String carNumber;
     private String carId;

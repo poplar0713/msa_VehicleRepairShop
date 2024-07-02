@@ -11,8 +11,6 @@ import untitled.config.kafka.KafkaProcessor;
 import untitled.domain.JobCreated;
 import untitled.domain.JobFinished;
 import untitled.domain.JobStarted;
-import untitled.domain.PartRecived;
-import untitled.domain.PartRequestCancled;
 import untitled.domain.RepairRequested;
 import untitled.domain.StatusPage;
 
@@ -34,13 +32,9 @@ public class StatusPageViewHandler {
             StatusPage statusPage = new StatusPage();
             // view 객체에 이벤트의 Value 를 set 함
             statusPage.setCustomerName(repairRequested.getCustomerName());
-            statusPage.setRequestId(repairRequested.getId());
             statusPage.setCarId(repairRequested.getCarId());
             statusPage.setRequestDate(repairRequested.getRequestDate());
-            statusPage.setCustomerName(repairRequested.getCustomerName());
-            statusPage.setRequestId(repairRequested.getId());
-            statusPage.setCarId(repairRequested.getCarId());
-            statusPage.setRequestDate(repairRequested.getRequestDate());
+            statusPage.setRecepitId(repairRequested.getId());
             // view 레파지 토리에 save
             statusPageRepository.save(statusPage);
         } catch (Exception e) {
@@ -49,16 +43,17 @@ public class StatusPageViewHandler {
     }
 
     @StreamListener(KafkaProcessor.INPUT)
-    public void whenJobStarted_then_UPDATE_1(@Payload JobStarted jobStarted) {
+    public void whenJobCreated_then_UPDATE_1(@Payload JobCreated jobCreated) {
         try {
-            if (!jobStarted.validate()) return;
+            if (!jobCreated.validate()) return;
             // view 객체 조회
 
-            List<StatusPage> statusPageList = statusPageRepository.findByJobstatus(
-                jobStarted.getJobStatus()
+            List<StatusPage> statusPageList = statusPageRepository.findByRequestId(
+                jobCreated.getId()
             );
             for (StatusPage statusPage : statusPageList) {
                 // view 객체에 이벤트의 eventDirectValue 를 set 함
+                statusPage.setMechanicName(jobCreated.getMechanicName());
                 // view 레파지 토리에 save
                 statusPageRepository.save(statusPage);
             }
@@ -68,19 +63,17 @@ public class StatusPageViewHandler {
     }
 
     @StreamListener(KafkaProcessor.INPUT)
-    public void whenJobFinished_then_UPDATE_2(
-        @Payload JobFinished jobFinished
-    ) {
+    public void whenJobStarted_then_UPDATE_2(@Payload JobStarted jobStarted) {
         try {
-            if (!jobFinished.validate()) return;
+            if (!jobStarted.validate()) return;
             // view 객체 조회
 
-            List<StatusPage> statusPageList = statusPageRepository.findByRequestId(
-                jobFinished.getReceiptId()
+            List<StatusPage> statusPageList = statusPageRepository.findByRecepitId(
+                jobStarted.getReceiptId()
             );
             for (StatusPage statusPage : statusPageList) {
                 // view 객체에 이벤트의 eventDirectValue 를 set 함
-                statusPage.setJobStatus(jobFinished.getJobStatus());
+                statusPage.setJobStatus(jobStarted.getJobStatus());
                 // view 레파지 토리에 save
                 statusPageRepository.save(statusPage);
             }
@@ -97,142 +90,12 @@ public class StatusPageViewHandler {
             if (!jobFinished.validate()) return;
             // view 객체 조회
 
-            List<StatusPage> statusPageList = statusPageRepository.findByRequestId(
+            List<StatusPage> statusPageList = statusPageRepository.findByRecepitId(
                 jobFinished.getReceiptId()
             );
             for (StatusPage statusPage : statusPageList) {
                 // view 객체에 이벤트의 eventDirectValue 를 set 함
                 statusPage.setJobStatus(jobFinished.getJobStatus());
-                // view 레파지 토리에 save
-                statusPageRepository.save(statusPage);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    @StreamListener(KafkaProcessor.INPUT)
-    public void whenPartRecived_then_UPDATE_4(
-        @Payload PartRecived partRecived
-    ) {
-        try {
-            if (!partRecived.validate()) return;
-            // view 객체 조회
-
-            List<StatusPage> statusPageList = statusPageRepository.findByRequestId(
-                partRecived.getReceiptId()
-            );
-            for (StatusPage statusPage : statusPageList) {
-                // view 객체에 이벤트의 eventDirectValue 를 set 함
-                statusPage.setTotalprice(partRecived.getTotalPrice());
-                // view 레파지 토리에 save
-                statusPageRepository.save(statusPage);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    @StreamListener(KafkaProcessor.INPUT)
-    public void whenPartRequestCancled_then_UPDATE_5(
-        @Payload PartRequestCancled partRequestCancled
-    ) {
-        try {
-            if (!partRequestCancled.validate()) return;
-            // view 객체 조회
-
-            List<StatusPage> statusPageList = statusPageRepository.findByRequestId(
-                partRequestCancled.getReceiptId()
-            );
-            for (StatusPage statusPage : statusPageList) {
-                // view 객체에 이벤트의 eventDirectValue 를 set 함
-                statusPage.setTotalprice(partRequestCancled.getTotalPrice());
-                // view 레파지 토리에 save
-                statusPageRepository.save(statusPage);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    @StreamListener(KafkaProcessor.INPUT)
-    public void whenJobCreated_then_UPDATE_6(@Payload JobCreated jobCreated) {
-        try {
-            if (!jobCreated.validate()) return;
-            // view 객체 조회
-
-            List<StatusPage> statusPageList = statusPageRepository.findByRequestId(
-                jobCreated.getId()
-            );
-            for (StatusPage statusPage : statusPageList) {
-                // view 객체에 이벤트의 eventDirectValue 를 set 함
-                statusPage.setMechanicName(
-                    String.valueOf(jobCreated.getMechanicId())
-                );
-                // view 레파지 토리에 save
-                statusPageRepository.save(statusPage);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    @StreamListener(KafkaProcessor.INPUT)
-    public void whenPartRecived_then_UPDATE_7(
-        @Payload PartRecived partRecived
-    ) {
-        try {
-            if (!partRecived.validate()) return;
-            // view 객체 조회
-
-            List<StatusPage> statusPageList = statusPageRepository.findByRequestId(
-                partRecived.getReceiptId()
-            );
-            for (StatusPage statusPage : statusPageList) {
-                // view 객체에 이벤트의 eventDirectValue 를 set 함
-                statusPage.setTotalprice(partRecived.getTotalPrice());
-                // view 레파지 토리에 save
-                statusPageRepository.save(statusPage);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    @StreamListener(KafkaProcessor.INPUT)
-    public void whenPartRequestCancled_then_UPDATE_8(
-        @Payload PartRequestCancled partRequestCancled
-    ) {
-        try {
-            if (!partRequestCancled.validate()) return;
-            // view 객체 조회
-
-            List<StatusPage> statusPageList = statusPageRepository.findByRequestId(
-                partRequestCancled.getReceiptId()
-            );
-            for (StatusPage statusPage : statusPageList) {
-                // view 객체에 이벤트의 eventDirectValue 를 set 함
-                statusPage.setTotalprice(partRequestCancled.getTotalPrice());
-                // view 레파지 토리에 save
-                statusPageRepository.save(statusPage);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    @StreamListener(KafkaProcessor.INPUT)
-    public void whenJobCreated_then_UPDATE_9(@Payload JobCreated jobCreated) {
-        try {
-            if (!jobCreated.validate()) return;
-            // view 객체 조회
-
-            List<StatusPage> statusPageList = statusPageRepository.findByRequestId(
-                jobCreated.getId()
-            );
-            for (StatusPage statusPage : statusPageList) {
-                // view 객체에 이벤트의 eventDirectValue 를 set 함
-                statusPage.setMechanicName(jobCreated.getMechanicName());
                 // view 레파지 토리에 save
                 statusPageRepository.save(statusPage);
             }

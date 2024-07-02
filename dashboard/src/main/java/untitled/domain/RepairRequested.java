@@ -9,6 +9,7 @@ import untitled.infra.AbstractEvent;
 public class RepairRequested extends AbstractEvent {
 
     private Long id;
+    private Long receiptId;
     private String customerName;
     private String carId;
     private String carNumber;

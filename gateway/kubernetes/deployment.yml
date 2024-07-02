@@ -16,6 +16,8 @@ spec:
     spec:
       containers:
         - name: gateway
-          image: gateway:v1
+          image: "879772956301.dkr.ecr.ap-southeast-2.amazonaws.com/user04/gateway:v1"
           ports:
             - containerPort: 8080
+      imagePullSecrets:
+        - name: ecr-secret

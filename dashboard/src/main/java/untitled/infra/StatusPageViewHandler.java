@@ -34,7 +34,7 @@ public class StatusPageViewHandler {
             statusPage.setCustomerName(repairRequested.getCustomerName());
             statusPage.setCarId(repairRequested.getCarId());
             statusPage.setRequestDate(repairRequested.getRequestDate());
-            statusPage.setRecepitId(repairRequested.getId());
+            statusPage.setReceiptId(repairRequested.getId());
             // view 레파지 토리에 save
             statusPageRepository.save(statusPage);
         } catch (Exception e) {
@@ -48,7 +48,7 @@ public class StatusPageViewHandler {
             if (!jobCreated.validate()) return;
             // view 객체 조회
 
-            List<StatusPage> statusPageList = statusPageRepository.findByRecepitId(
+            List<StatusPage> statusPageList = statusPageRepository.findByReceiptId(
                 jobCreated.getId()
             );
             for (StatusPage statusPage : statusPageList) {
@@ -68,7 +68,7 @@ public class StatusPageViewHandler {
             if (!jobStarted.validate()) return;
             // view 객체 조회
 
-            List<StatusPage> statusPageList = statusPageRepository.findByRecepitId(
+            List<StatusPage> statusPageList = statusPageRepository.findByReceiptId(
                 jobStarted.getReceiptId()
             );
             for (StatusPage statusPage : statusPageList) {
@@ -90,7 +90,7 @@ public class StatusPageViewHandler {
             if (!jobFinished.validate()) return;
             // view 객체 조회
 
-            List<StatusPage> statusPageList = statusPageRepository.findByRecepitId(
+            List<StatusPage> statusPageList = statusPageRepository.findByReceiptId(
                 jobFinished.getReceiptId()
             );
             for (StatusPage statusPage : statusPageList) {

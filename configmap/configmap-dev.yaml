@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: repair-shop-config-development
+  namespace: development
+data:
+  log_level: "DEBUG"

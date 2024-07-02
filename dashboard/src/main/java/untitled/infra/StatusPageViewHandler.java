@@ -48,7 +48,7 @@ public class StatusPageViewHandler {
             if (!jobCreated.validate()) return;
             // view 객체 조회
 
-            List<StatusPage> statusPageList = statusPageRepository.findByRequestId(
+            List<StatusPage> statusPageList = statusPageRepository.findByRecepitId(
                 jobCreated.getId()
             );
             for (StatusPage statusPage : statusPageList) {

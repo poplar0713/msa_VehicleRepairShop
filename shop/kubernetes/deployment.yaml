@@ -19,6 +19,9 @@ spec:
           image: "879772956301.dkr.ecr.ap-southeast-2.amazonaws.com/user04/shop:v1"
           ports:
             - containerPort: 8080
+          env:
+            - name: SPRING_PROFILES_ACTIVE
+              value: "docker"
           readinessProbe:
             httpGet:
               path: '/actuator/health'

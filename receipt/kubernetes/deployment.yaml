@@ -5,7 +5,7 @@ metadata:
   labels:
     app: receipt
 spec:
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
       app: receipt
@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: receipt
-          image: "username/receipt:latest"
+          image: "879772956301.dkr.ecr.ap-southeast-2.amazonaws.com/user04/receipt:v1"
           ports:
             - containerPort: 8080
           readinessProbe:
@@ -35,3 +35,5 @@ spec:
             timeoutSeconds: 2
             periodSeconds: 5
             failureThreshold: 5
+      imagePullSecrets:
+        - name: ecr-secret

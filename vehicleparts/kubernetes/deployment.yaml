@@ -5,7 +5,7 @@ metadata:
   labels:
     app: vehicleparts
 spec:
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
       app: vehicleparts
@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: vehicleparts
-          image: "username/vehicleparts:latest"
+          image: "879772956301.dkr.ecr.ap-southeast-2.amazonaws.com/user04/vehicleparts:v1"
           ports:
             - containerPort: 8080
           readinessProbe:

@@ -1,7 +1,10 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: repair-shop-config-development
-  namespace: development
+  name: service-config-dev
+  namespace: dev-repairshop
 data:
-  log_level: "DEBUG"
+  receipt-url: "http://receipt-dev:8080"
+  vehicleparts-url: "http://vehicleparts-dev:8080"
+  mechanic-url: "http://mechanic-dev:8080"
+  shop-url: "http://shop-dev:8080"

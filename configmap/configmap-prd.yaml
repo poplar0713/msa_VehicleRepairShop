@@ -1,7 +1,10 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: repair-shop-config-production
-  namespace: production
+  name: service-config-prod
+  namespace: prd-repairshop
 data:
-  log_level: "ERROR"
+  receipt-url: "http://receipt:8080"
+  vehicleparts-url: "http://vehicleparts:8080"
+  mechanic-url: "http://mechanic:8080"
+  shop-url: "http://shop:8080"

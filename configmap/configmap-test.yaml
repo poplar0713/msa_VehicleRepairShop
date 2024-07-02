@@ -1,7 +1,0 @@
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: repair-shop-config-testing
-  namespace: testing
-data:
-  log_level: "INFO"

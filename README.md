@@ -281,6 +281,7 @@ prd 환경에서 로그레벨 INFO로 적용 된 것을 확인
 ![image](https://github.com/poplar0713/msa_VehicleRepairShop/assets/59277907/9cdbad6e-a464-429d-ac61-ea86401024ee)
 
 
+
 ## 9. 클라우드스토리지 활용 - PVC
 
 ### EFS 생성
@@ -396,11 +397,34 @@ EOF
 
 
 
+### 10. 서비스 mesh 응용
+
+### istio 설치 
+```
+export ISTIO_VERSION=1.18.1
+curl -L https://istio.io/downloadIstio | ISTIO_VERSION=$ISTIO_VERSION TARGET_ARCH=x86_64 sh -
+cd istio-$ISTIO_VERSION
+export PATH=$PWD/bin:$PATH
+istioctl install --set profile=demo --set hub=gcr.io/istio-release
+```
+
+### kiall 설정
+```
+mv samples/addons/loki.yaml samples/addons/loki.yaml.old
+curl -o samples/addons/loki.yaml https://raw.githubusercontent.com/msa-school/Lab-required-Materials/main/Ops/loki.yaml
+kubectl apply -f samples/addons
+kubectl patch svc kiali -n istio-system -p '{"spec": {"type": "LoadBalancer"}}'
+kubectl get service -n istio-system
+```
+![image](https://github.com/poplar0713/msa_VehicleRepairShop/assets/59277907/a0edba52-2fcc-4282-8e8c-690bdce73a46)
 
 
-
-
-
+### Jager 설정
+```
+kubectl patch svc tracing -n istio-system -p '{"spec": {"type": "LoadBalancer"}}'
+kubectl get service -n istio-system
+```
+![image](https://github.com/poplar0713/msa_VehicleRepairShop/assets/59277907/aeeec8e4-ae06-4ef4-a7b7-b0d52b024afc)
 
 
 

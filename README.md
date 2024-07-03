@@ -1,26 +1,26 @@
-차량 정비소 시스템 
+# 차량 정비소 시스템 
 
-1. 클라우드 아키텍쳐
+## 1. 클라우드 아키텍쳐
 ![아키텍처](https://github.com/poplar0713/msa_VehicleRepairShop/assets/59277907/4c27eded-2fd0-4138-80a5-a084e52a3737)
 
 Recepit(접수), mechanic(정비사), shop(정비소), vehicleparts(부품관리) 4개의 도메인으로 구성됨
 
 
-2. 이벤트 스토밍
+## 2. 이벤트 스토밍
 ### Model
 www.msaez.io/#/59277907/storming/%EC%B0%A8%EB%9F%89%EC%A0%95%EB%B9%84
 ![이벤트스토밍](https://github.com/poplar0713/msa_VehicleRepairShop/assets/59277907/602de239-7f70-4df6-9229-21b4993fe358)
 
 ### 시나리오
- 1. 고객이 접수처에서 정비 요청 (원하는 정비사 및 요청 사항 등)
- 2. 해당 정비사의 공수가 남아있으면 요청 접수 및 작업 생성, 공수가 부족하다면 요청 취소
- 3. 정비사는 작업을 시작한 후 필요한 부품을 요청
- 4. 요청한 부품의 재고가 있으면 부품 제공, 없으면 요청 취소 처리
- 5. 정비사가 작업을 종료하면 요금 청구서가 생성됨
+   1. 고객이 접수처에서 정비 요청 (원하는 정비사 및 요청 사항 등)
+   2. 해당 정비사의 공수가 남아있으면 요청 접수 및 작업 생성, 공수가 부족하다면 요청 취소
+   3. 정비사는 작업을 시작한 후 필요한 부품을 요청
+   4. 요청한 부품의 재고가 있으면 부품 제공, 없으면 요청 취소 처리
+   5. 정비사가 작업을 종료하면 요금 청구서가 생성됨
 
 
 
-3. Dev - 보상 트랜잭션
+## 3. Dev - 보상 트랜잭션
  시나리오 2번에서 보상 트랜잭션 구현
 ```
     public static void repairRequest(RepairRequested repairRequested) {
@@ -43,7 +43,7 @@ www.msaez.io/#/59277907/storming/%EC%B0%A8%EB%9F%89%EC%A0%95%EB%B9%84
 ```
 
 
-5. CQRS
+## 5. CQRS
    ![image](https://github.com/poplar0713/msa_VehicleRepairShop/assets/59277907/0b8d70f9-d4af-414d-bf8e-a851e9898c82)
 ```
 @Service
@@ -140,14 +140,14 @@ public class StatusPageViewHandler {
 
 ```
 
-6. 클라우드 배포
-  1) AWS ECR 리포지토리 이용
+## 6. 클라우드 배포
+###  1) AWS ECR 리포지토리 이용
 ![image](https://github.com/poplar0713/msa_VehicleRepairShop/assets/59277907/1ab77cec-a94d-42dc-a6f4-c83da71e75ca)
 
 ![image](https://github.com/poplar0713/msa_VehicleRepairShop/assets/59277907/b5a5955b-489e-45de-b815-6e61b41876f9)
 
 
-  2) eks 배포
+###  2) eks 배포
 ```
 # /shop/deployment.yaml
     spec:
@@ -160,8 +160,8 @@ public class StatusPageViewHandler {
 ![image](https://github.com/poplar0713/msa_VehicleRepairShop/assets/59277907/55266809-67cd-4d5b-94c2-66a7d23337da)
 
 
-7. Config map을 활용한 환경 분리
-   dev환경과 prd 환경의 분리 예제 (namespace로 구별)
+## 7. Config map을 활용한 환경 분리
+###  dev환경과 prd 환경의 분리 예제 (namespace로 구별)
 ```
 # configmap-dev.yaml
 

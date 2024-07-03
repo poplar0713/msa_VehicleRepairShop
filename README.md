@@ -339,7 +339,6 @@ EOF
  - NFS 볼륨을 가지는 주문마이크로서비스 배포
 ```
 kubectl apply -f - <<EOF
-
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -380,16 +379,15 @@ spec:
             timeoutSeconds: 2
             periodSeconds: 5
             failureThreshold: 5
-        volumeMounts:
-          - mountPath: "/mnt/data"
-            name: volume
+          volumeMounts:
+            - mountPath: "/mnt/data"
+              name: volume
       volumes:
-      - name: volume
-        persistentVolumeClaim:
-          claimName: nfs-pvc  
+        - name: volume
+          persistentVolumeClaim:
+            claimName: nfs-pvc
       imagePullSecrets:
         - name: ecr-secret
-
 EOF
 ```
 

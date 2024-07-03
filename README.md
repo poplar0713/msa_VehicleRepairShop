@@ -176,6 +176,7 @@ public class StatusPageViewHandler {
 ## 8. Config map을 활용한 환경 분리
 ###  dev환경과 prd 환경의 분리 예제 (namespace로 구별)
 ```
+ - config map 설정파일 생성
 # configmap-dev.yaml
 
 apiVersion: v1
@@ -191,7 +192,6 @@ data:
 
 ```
 
-
 ```
 # configmap-prd.yaml
 
@@ -206,7 +206,7 @@ data:
   shop-url: "http://shop:8080"
 ```
 
-gateway application.yaml 파일 수정
+ - gateway application.yaml 파일 수정
 ```
 spring:
   profiles: docker
@@ -263,15 +263,19 @@ spring:
 적용
 ```
 #클러스터에 config map 적용
+
 kubectl apply -f configmap-dev.yaml
 kubectl apply -f configmap-prod.yaml
+
 
 #namespace prd-repairshop 설정시 prd 환경,
 #namespace dev-reparishop 설정시 dev 환경 배포로 설정
 
-kubectl apply -f receipt/kubernetes/deployment.yaml -n prd-reparshop
-kubectl apply -f receipt/kubernetes/deployment.yaml
+kubectl apply -f receipt/kubernetes/deployment.yaml -n prd-repairshop
+kubectl apply -f receipt/kubernetes/deployment.yaml -n dev-repairshop
 ```
+
+
 
 
 

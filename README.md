@@ -281,6 +281,124 @@ prd 환경에서 로그레벨 INFO로 적용 된 것을 확인
 ![image](https://github.com/poplar0713/msa_VehicleRepairShop/assets/59277907/9cdbad6e-a464-429d-ac61-ea86401024ee)
 
 
+## 9. 클라우드스토리지 활용 - PVC
+
+### EFS 생성
+![image](https://github.com/poplar0713/msa_VehicleRepairShop/assets/59277907/163c10b2-c2ba-4cbf-a5c9-d2e4a1fa7d79)
+
+ - SA 생성 및 IAM 연결
+![image](https://github.com/poplar0713/msa_VehicleRepairShop/assets/59277907/88d2a87b-ab8c-4fc4-959e-97dd1a57e929)
+
+ - Cluster에 EFS CSI 드라이버 설치
+```
+helm repo add aws-efs-csi-driver https://kubernetes-sigs.github.io/aws-efs-csi-driver
+helm repo update
+helm upgrade -i aws-efs-csi-driver aws-efs-csi-driver/aws-efs-csi-driver \
+  --namespace kube-system \
+  --set image.repository=602401143452.dkr.ecr.ap-southeast-2.amazonaws.com/eks/aws-efs-csi-driver \
+  --set controller.serviceAccount.create=false \
+  --set controller.serviceAccount.name=efs-csi-controller-sa
+```
+
+ - EFS csi Driver로 StorageClass 생성
+```
+kubectl apply -f - <<EOF
+kind: StorageClass
+apiVersion: storage.k8s.io/v1
+metadata:
+  name: efs-sc
+provisioner: efs.csi.aws.com
+parameters:
+  provisioningMode: efs-ap
+  fileSystemId: $FILE_SYSTEM_ID
+  directoryPerms: "700"
+EOF
+```
+![image](https://github.com/poplar0713/msa_VehicleRepairShop/assets/59277907/32474cbd-1a1d-47dd-bf65-681ab2b77368)
+
+ - PVC 생성 및 Pod에 연결
+```
+kubectl apply -f - <<EOF
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: nfs-pvc
+  labels:
+    app: test-pvc
+spec:
+  accessModes:
+  - ReadWriteMany
+  resources:
+    requests:
+      storage: 1Mi
+  storageClassName: efs-sc
+EOF
+```
+![image](https://github.com/poplar0713/msa_VehicleRepairShop/assets/59277907/de89fa43-3601-4270-8781-a446ca98fea6)
+
+ - NFS 볼륨을 가지는 주문마이크로서비스 배포
+```
+kubectl apply -f - <<EOF
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: receipt
+  labels:
+    app: receipt
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: receipt
+  template:
+    metadata:
+      labels:
+        app: receipt
+    spec:
+      containers:
+        - name: receipt
+          image: "879772956301.dkr.ecr.ap-southeast-2.amazonaws.com/user04/receipt:latest"
+          ports:
+            - containerPort: 8080
+          env:
+            - name: SPRING_PROFILES_ACTIVE
+              value: "docker"
+          readinessProbe:
+            httpGet:
+              path: '/actuator/health'
+              port: 8080
+            initialDelaySeconds: 10
+            timeoutSeconds: 2
+            periodSeconds: 5
+            failureThreshold: 10
+          livenessProbe:
+            httpGet:
+              path: '/actuator/health'
+              port: 8080
+            initialDelaySeconds: 120
+            timeoutSeconds: 2
+            periodSeconds: 5
+            failureThreshold: 5
+        volumeMounts:
+          - mountPath: "/mnt/data"
+            name: volume
+      volumes:
+      - name: volume
+        persistentVolumeClaim:
+          claimName: nfs-pvc  
+      imagePullSecrets:
+        - name: ecr-secret
+
+EOF
+```
+
+
+
+
+
+
+
 
 
 

@@ -431,8 +431,6 @@ kubectl get service -n istio-system
 ```
 ![image](https://github.com/poplar0713/msa_VehicleRepairShop/assets/59277907/aeeec8e4-ae06-4ef4-a7b7-b0d52b024afc)
 
-
-
  
 
 

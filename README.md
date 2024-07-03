@@ -184,16 +184,17 @@ metadata:
   name: service-config-dev
   namespace: dev-repairshop
 data:
-  receipt-url: "http://receipt-dev:8080"
-  vehicleparts-url: "http://vehicleparts-dev:8080"
-  mechanic-url: "http://mechanic-dev:8080"
-  shop-url: "http://shop-dev:8080"
+  receipt-url: "http://dev-receipt:8080"
+  vehicleparts-url: "http://dev-vehicleparts:8080"
+  mechanic-url: "http://dev-mechanic:8080"
+  shop-url: "http://dev-shop:8080"
 
 ```
 
 
 ```
 # configmap-prd.yaml
+
 kind: ConfigMap
 metadata:
   name: service-config-prod
@@ -205,10 +206,71 @@ data:
   shop-url: "http://shop:8080"
 ```
 
+gateway application.yaml 파일 수정
+```
+spring:
+  profiles: docker
+  cloud:
+    gateway:
+      routes:
+        - id: dev-receipt
+          uri: http://dev-receipt:8080
+          predicates:
+            - Path=/receipts/**, 
+        - id: dev-shop
+          uri: http://dev-shop:8080
+          predicates:
+            - Path=/dev-shops/**, 
+        - id: dev-vehicleparts
+          uri: http://dev-vehicleparts:8080
+          predicates:
+            - Path=/dev-vehicleParts/**, 
+        - id: dev-dashboard
+          uri: http://dashboard:8080
+          predicates:
+            - Path=, 
+        - id: dev-mechanic
+          uri: http://dev-mechanic:8080
+          predicates:
+            - Path=/dev-mechanics/**,
+            - id: receipt
+          uri: http://receipt:8080
+          predicates:
+            - Path=/receipts/**, 
+        - id: shop
+          uri: http://shop:8080
+          predicates:
+            - Path=/shops/**, 
+        - id: vehicleparts
+          uri: http://vehicleparts:8080
+          predicates:
+            - Path=/vehicleParts/**, 
+        - id: dashboard
+          uri: http://dashboard:8080
+          predicates:
+            - Path=, 
+        - id: mechanic
+          uri: http://mechanic:8080
+          predicates:
+            - Path=/mechanics/**, 
+        - id: frontend
+          uri: http://frontend:8080
+          predicates:
+            - Path=/**
+```
+
+
 적용
 ```
+#클러스터에 config map 적용
 kubectl apply -f configmap-dev.yaml
 kubectl apply -f configmap-prod.yaml
+
+#namespace prd-repairshop 설정시 prd 환경,
+#namespace dev-reparishop 설정시 dev 환경 배포로 설정
+
+kubectl apply -f receipt/kubernetes/deployment.yaml -n prd-reparshop
+kubectl apply -f receipt/kubernetes/deployment.yaml
 ```
 
 

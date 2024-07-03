@@ -408,6 +408,11 @@ export PATH=$PWD/bin:$PATH
 istioctl install --set profile=demo --set hub=gcr.io/istio-release
 ```
 
+### istio svc 확인
+![image](https://github.com/poplar0713/msa_VehicleRepairShop/assets/59277907/f81db6ca-3219-4db5-8a10-50f9aca89053)
+
+
+
 ### kiall 설정
 ```
 mv samples/addons/loki.yaml samples/addons/loki.yaml.old

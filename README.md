@@ -391,6 +391,8 @@ spec:
 EOF
 ```
 
+ ### 클라우드 스토리지 연결 확인
+ ![image](https://github.com/poplar0713/msa_VehicleRepairShop/assets/59277907/0ff22cab-e38a-41f2-9354-bc60e500901e)
 
 
 

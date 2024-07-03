@@ -42,7 +42,7 @@ www.msaez.io/#/59277907/storming/%EC%B0%A8%EB%9F%89%EC%A0%95%EB%B9%84
     }
 ```
 
-## 5. gateway test
+## 4. gateway test
 로컬 환경 테스트 
 ![image](https://github.com/poplar0713/msa_VehicleRepairShop/assets/59277907/5c4e552d-827d-4c52-8c56-f4949ceaf0df)
 
@@ -56,7 +56,7 @@ http :8088/vehicleParts id=1 partId=1 partName="테스트" stock=20 partPrice=10
 
 
 
-## 6. CQRS
+## 5. CQRS
    ![image](https://github.com/poplar0713/msa_VehicleRepairShop/assets/59277907/0b8d70f9-d4af-414d-bf8e-a851e9898c82)
 ```
 @Service
@@ -153,7 +153,7 @@ public class StatusPageViewHandler {
 
 ```
 
-## 7. 클라우드 배포
+## 6. 클라우드 배포
 ###  1) AWS ECR 리포지토리 이용
 ![image](https://github.com/poplar0713/msa_VehicleRepairShop/assets/59277907/1ab77cec-a94d-42dc-a6f4-c83da71e75ca)
 
@@ -173,7 +173,7 @@ public class StatusPageViewHandler {
 ![image](https://github.com/poplar0713/msa_VehicleRepairShop/assets/59277907/55266809-67cd-4d5b-94c2-66a7d23337da)
 
 
-## 8. Config map을 활용한 환경 분리
+## 7. Config map을 활용한 환경 분리
 ###  dev환경과 prd 환경의 분리 예제 (namespace로 구별)
 ```
  - config map 설정파일 생성
@@ -282,7 +282,7 @@ prd 환경에서 로그레벨 INFO로 적용 된 것을 확인
 
 
 
-## 9. 클라우드스토리지 활용 - PVC
+## 8. 클라우드스토리지 활용 - PVC
 
 ### EFS 생성
 ![image](https://github.com/poplar0713/msa_VehicleRepairShop/assets/59277907/163c10b2-c2ba-4cbf-a5c9-d2e4a1fa7d79)
@@ -397,7 +397,7 @@ EOF
 
 
 
-### 10. 서비스 mesh 응용
+### 9. 서비스 mesh 응용
 
 ### istio 설치 
 ```

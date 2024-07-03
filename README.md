@@ -189,6 +189,7 @@ data:
   vehicleparts-url: "http://dev-vehicleparts:8080"
   mechanic-url: "http://dev-mechanic:8080"
   shop-url: "http://dev-shop:8080"
+  LOG_LEVEL: "DEBUG"
 
 ```
 
@@ -204,6 +205,7 @@ data:
   vehicleparts-url: "http://vehicleparts:8080"
   mechanic-url: "http://mechanic:8080"
   shop-url: "http://shop:8080"
+  LOG_LEVEL: "INFO"
 ```
 
  - gateway application.yaml 파일 수정

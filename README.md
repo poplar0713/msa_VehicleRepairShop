@@ -277,6 +277,9 @@ kubectl apply -f receipt/kubernetes/deployment.yaml -n prd-repairshop
 kubectl apply -f receipt/kubernetes/deployment.yaml -n dev-repairshop
 ```
 
+prd 환경에서 로그레벨 INFO로 적용 된 것을 확인
+![image](https://github.com/poplar0713/msa_VehicleRepairShop/assets/59277907/9cdbad6e-a464-429d-ac61-ea86401024ee)
+
 
 
 

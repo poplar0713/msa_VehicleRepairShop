@@ -42,8 +42,21 @@ www.msaez.io/#/59277907/storming/%EC%B0%A8%EB%9F%89%EC%A0%95%EB%B9%84
     }
 ```
 
+## 5. gateway test
+로컬 환경 테스트 
+![image](https://github.com/poplar0713/msa_VehicleRepairShop/assets/59277907/5c4e552d-827d-4c52-8c56-f4949ceaf0df)
 
-## 5. CQRS
+```
+http :8088/vehicleParts id=1 partId=1 partName="테스트" stock=20 partPrice=10000
+```
+![image](https://github.com/poplar0713/msa_VehicleRepairShop/assets/59277907/6be72515-fe0f-44ae-b6c3-f9d2e1818e95)
+
+
+
+
+
+
+## 6. CQRS
    ![image](https://github.com/poplar0713/msa_VehicleRepairShop/assets/59277907/0b8d70f9-d4af-414d-bf8e-a851e9898c82)
 ```
 @Service
@@ -140,7 +153,7 @@ public class StatusPageViewHandler {
 
 ```
 
-## 6. 클라우드 배포
+## 7. 클라우드 배포
 ###  1) AWS ECR 리포지토리 이용
 ![image](https://github.com/poplar0713/msa_VehicleRepairShop/assets/59277907/1ab77cec-a94d-42dc-a6f4-c83da71e75ca)
 
@@ -160,7 +173,7 @@ public class StatusPageViewHandler {
 ![image](https://github.com/poplar0713/msa_VehicleRepairShop/assets/59277907/55266809-67cd-4d5b-94c2-66a7d23337da)
 
 
-## 7. Config map을 활용한 환경 분리
+## 8. Config map을 활용한 환경 분리
 ###  dev환경과 prd 환경의 분리 예제 (namespace로 구별)
 ```
 # configmap-dev.yaml
